@@ -1,11 +1,9 @@
-/**
- * Created by ass on 18.05.16.
- */
-
 'use strict';
 
+import Slider from './slider'
 let root = document.createElement('div');
-
-root.innerHTML = 'qwe';
-
 document.body.appendChild(root);
+
+const slider = new Slider({
+  elem: root
+});
