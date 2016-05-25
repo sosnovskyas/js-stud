@@ -16,32 +16,35 @@ export default class Slider {
     this.elem.appendChild(sliderLine);
 
     this.thumb = sliderThumb;
+    this.sliderLineCoords = sliderLine.getBoundingClientRect();
+    this.sliderThumbCoords = sliderThumb.getBoundingClientRect();
 
     this.mouseMoveHandler = this.mouseMove.bind(this);
 
-    this.elem.addEventListener('mousedown', event => this.mouseDown(event));
+    document.addEventListener('mousedown', event => this.mouseDown(event));
     document.addEventListener('mouseup', event => this.mouseUp(event));
   }
 
   mouseDown(event) {
-    let target = event.target;
-    let thumb = target.closest('.slider__thumb');
+    const thumb = event.target.closest('.slider__thumb');
 
     if (!thumb) return;
 
-    window.addEventListener('mousemove', this.mouseMoveHandler);
+    document.addEventListener('mousemove', this.mouseMoveHandler);
     console.log('down');
   }
 
   mouseUp(event) {
-    window.removeEventListener('mousemove', this.mouseMoveHandler);
+    document.removeEventListener('mousemove', this.mouseMoveHandler);
     console.log('up');
   }
 
   mouseMove(event) {
-    //this.thumb.style.left = event.layerX + 'px';
-    console.log(this.thumb);
-    console.log(event.layerX, this.thumb);
+    if (((event.clientX - this.sliderLineCoords.left) > 0) &&((this.sliderLineCoords.right - this.sliderLineCoords.left) > event.clientX)) {
+      this.thumb.style.left = event.clientX - this.sliderLineCoords.left + 'px';
+    }
+    // console.log(this.thumb);
+    console.log('clientX:', event.clientX, 'coord:', this.sliderLineCoords.right);
   }
 
 }
