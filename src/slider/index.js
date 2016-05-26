@@ -13,18 +13,18 @@ export default class Slider {
     this._max = maxValue;
 
     // make slider
-    this._slider = this.makeSlider(elem);
+    this._slider = this._makeSlider(elem);
 
     // set slider
     this._setPointValue();
 
     this.setValue(currentValue);
 
-    document.addEventListener('mousedown', event => this.mouseDown(event));
+    document.addEventListener('mousedown', event => this._mouseDown(event));
     document.addEventListener('mouseup', event => this._mouseUp(event));
   }
 
-  makeSlider(elem) {
+  _makeSlider(elem) {
     let sliderLine = document.createElement('div');
     let sliderThumb = document.createElement('div');
 
@@ -44,7 +44,7 @@ export default class Slider {
     }
   }
 
-  mouseDown(event) {
+  _mouseDown(event) {
     console.log('down');
 
     const thumb = event.target.closest('.slider__thumb');
@@ -102,6 +102,7 @@ export default class Slider {
     // set value
     this._slider.value = value;
 
+    this._setCoords()
   }
 
   getValue(){
