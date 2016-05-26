@@ -14,7 +14,7 @@ export default class Slider {
 
     this._slider = this.makeSlider(elem);
 
-    this._point = this._getPointValue();
+    this._getPointValue();
 
     this.value = this.setValue(currentValue);
 
@@ -109,7 +109,7 @@ export default class Slider {
   _getPointValue(){
     const lineWidth = this._slider.line.getBoundingClientRect().width;
     const vlueRange = this._max - this._min;
-    return lineWidth / vlueRange;
+    this._point = lineWidth / vlueRange;
   }
 
 }
