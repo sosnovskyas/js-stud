@@ -7,14 +7,16 @@ export default class Slider {
     elem,
     minValue = 100,
     maxValue = 200,
+    currentValue = minValue
   }) {
     this._min = minValue;
     this._max = maxValue;
 
     this._slider = this.makeSlider(elem);
-    this._slider.lineCoords = this._slider.line.getBoundingClientRect();
 
-    this.point = this._getPointValue();
+    this._point = this._getPointValue();
+
+    this.value = this.setValue(currentValue);
 
     document.addEventListener('mousedown', event => this.mouseDown(event));
     document.addEventListener('mouseup', event => this._mouseUp(event));
@@ -103,11 +105,12 @@ export default class Slider {
       value = this._max;
     }
 
-    this._setCoords();
+    // set value
+    this.value = value;
   }
 
   getValue(){
-    const lenght = this._slider.line.getBoundingClientRect().width - this._slider.thumb.getBoundingClientRect().width;
+    // const lenght = this._slider.line.getBoundingClientRect().width - this._slider.thumb.getBoundingClientRect().width;
     return this._slider.thumb.getBoundingClientRect().left
   }
 
