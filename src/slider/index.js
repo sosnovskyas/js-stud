@@ -87,14 +87,6 @@ export default class Slider {
     this._slider.thumb.style.left = value + 'px';
   }
 
-  _getValueFromCoords(coords){
-
-  }
-
-  _getCoordsFromValue(value){
-
-  }
-
   setValue(value){
     // check value
     if (value < this._min) {
