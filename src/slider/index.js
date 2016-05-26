@@ -92,6 +92,10 @@ export default class Slider {
     this._slider.thumb.style.left = value + 'px';
   }
 
+  _inputChangeHandler(event){
+    
+  }
+
   setValue(value) {
     // check value
     if (typeof value !== 'number') {
