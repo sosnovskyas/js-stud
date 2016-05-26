@@ -5,11 +5,16 @@ import './slider.styl'
 export default class Slider {
   constructor({
     elem,
-    minValue = 0,
-    maxValue = 100,
+    minValue = 100,
+    maxValue = 200,
   }) {
+    this._min = minValue;
+    this._max = maxValue;
+
     this._slider = this.makeSlider(elem);
     this._slider.lineCoords = this._slider.line.getBoundingClientRect();
+
+    this.point = this._getPointValue();
 
     document.addEventListener('mousedown', event => this.mouseDown(event));
     document.addEventListener('mouseup', event => this._mouseUp(event));
@@ -60,10 +65,10 @@ export default class Slider {
     // value calculate
     let value = cursorX - sliderLeftGround - thumbCenter;
 
-    this._setValue(value);
+    this._setCoords(value);
   }
 
-  _setValue(value){
+  _setCoords(value){
     // limits calculate
     const max = this._slider.line.getBoundingClientRect().width - this._slider.thumb.getBoundingClientRect().width;
     const min = 0;
@@ -80,13 +85,36 @@ export default class Slider {
     this._slider.thumb.style.left = value + 'px';
   }
 
+  _getValueFromCoords(coords){
+
+  }
+
+  _getCoordsFromValue(value){
+
+  }
+
   setValue(value){
-    this._slider.thumb.style.left = value + 'px';
+    // check value
+    if (value < this._min) {
+      // left limit
+      value = this._min
+    } else if (value > this._max) {
+      // right limit
+      value = this._max;
+    }
+
+    this._setCoords();
   }
 
   getValue(){
     const lenght = this._slider.line.getBoundingClientRect().width - this._slider.thumb.getBoundingClientRect().width;
     return this._slider.thumb.getBoundingClientRect().left
+  }
+
+  _getPointValue(){
+    const lineWidth = this._slider.line.getBoundingClientRect().width;
+    const vlueRange = this._max - this._min;
+    return lineWidth / vlueRange;
   }
 
 }
