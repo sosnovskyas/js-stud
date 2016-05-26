@@ -23,6 +23,7 @@ export default class Slider {
 
     this._slider.elem.addEventListener('mousedown', event => this._mouseDown(event));
     document.addEventListener('mouseup', event => this._mouseUp(event));
+    this._slider.input.addEventListener('input', event => this._inputHandler(event));
   }
 
   _makeSlider(elem) {
@@ -30,10 +31,11 @@ export default class Slider {
     let sliderThumb = document.createElement('div');
     let sliderInput = document.createElement('input');
 
+
     sliderLine.classList.add('slider__line');
     sliderThumb.classList.add('slider__thumb');
+    sliderInput.type = 'text';
     sliderLine.appendChild(sliderThumb);
-
     sliderThumb.ondragstart = () => false;
 
     elem.appendChild(sliderLine);
@@ -92,8 +94,8 @@ export default class Slider {
     this._slider.thumb.style.left = value + 'px';
   }
 
-  _inputChangeHandler(event){
-    
+  _inputHandler(event){
+    console.log(event.target.value);
   }
 
   setValue(value) {
@@ -111,7 +113,7 @@ export default class Slider {
 
     // set value
     this._slider.value = value;
-
+    this._slider.input.value = value;
     this._setCoords((value * this._slider.point) - (this._slider.min * this._slider.point))
   }
 
