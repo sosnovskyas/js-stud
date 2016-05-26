@@ -21,7 +21,7 @@ export default class Slider {
 
     console.log(this._slider);
 
-    document.addEventListener('mousedown', event => this._mouseDown(event));
+    this._slider.elem.addEventListener('mousedown', event => this._mouseDown(event));
     document.addEventListener('mouseup', event => this._mouseUp(event));
   }
 
@@ -64,7 +64,7 @@ export default class Slider {
   _mouseMove(event) {
     const cursorX = event.clientX;
     const sliderLeftGround = this._slider.line.getBoundingClientRect().left;
-    const thumbCenter  = this._slider.thumb.getBoundingClientRect().width / 2;
+    const thumbCenter = this._slider.thumb.getBoundingClientRect().width / 2;
 
     // value calculate
     let value = cursorX - sliderLeftGround - thumbCenter;
@@ -72,7 +72,7 @@ export default class Slider {
     this._setCoords(value);
   }
 
-  _setCoords(value){
+  _setCoords(value) {
     // limits calculate
     const max = this._slider.line.getBoundingClientRect().width - this._slider.thumb.getBoundingClientRect().width;
     const min = 0;
@@ -89,14 +89,17 @@ export default class Slider {
     this._slider.thumb.style.left = value + 'px';
   }
 
-  setValue(value){
+  setValue(value) {
     // check value
-    if (value < this._min) {
+    if (typeof value !== 'number') {
+      console.warn('set value, error: value not a number');
+      return;
+    } else if (value < this._slider.min) {
       // left limit
-      value = this._min
-    } else if (value > this._max) {
+      value = this._slider.min
+    } else if (value > this._slider.max) {
       // right limit
-      value = this._max;
+      value = this._slider.max;
     }
 
     // set value
@@ -105,11 +108,11 @@ export default class Slider {
     this._setCoords((value * this._slider.point) - (this._slider.min * this._slider.point))
   }
 
-  getValue(){
+  getValue() {
     return this._slider.value;
   }
 
-  _setPointValue(){
+  _setPointValue() {
     const lineWidth = this._slider.line.getBoundingClientRect().width;
     const vlueRange = this._slider.max - this._slider.min;
     this._slider.point = lineWidth / vlueRange;
