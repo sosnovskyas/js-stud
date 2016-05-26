@@ -28,6 +28,7 @@ export default class Slider {
   _makeSlider(elem) {
     let sliderLine = document.createElement('div');
     let sliderThumb = document.createElement('div');
+    let sliderInput = document.createElement('input');
 
     sliderLine.classList.add('slider__line');
     sliderThumb.classList.add('slider__thumb');
@@ -36,11 +37,13 @@ export default class Slider {
     sliderThumb.ondragstart = () => false;
 
     elem.appendChild(sliderLine);
+    elem.appendChild(sliderInput);
 
     return {
       elem: elem,
       thumb: sliderThumb,
       line: sliderLine,
+      input: sliderInput,
       moveHandler: this._mouseMove.bind(this)
     }
   }
