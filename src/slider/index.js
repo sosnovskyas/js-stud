@@ -74,8 +74,9 @@ export default class Slider {
 
     // value calculate
     let value = cursorX - sliderLeftGround - thumbCenter;
-
-    this._setCoords(value);
+    //(value * this._slider.point) - (this._slider.min * this._slider.point)
+    this.setValue(this._slider.min + (value / this._slider.point));
+    // this._setCoords(value);
   }
 
   _setCoords(value) {
@@ -95,20 +96,22 @@ export default class Slider {
     this._slider.thumb.style.left = value + 'px';
   }
 
-  _inputHandler(event){
-    const value = parseInt(event.target.value) ?  parseInt(event.target.value): 'error';
+  _inputHandler(event) {
+    const value = parseInt(event.target.value) ? parseInt(event.target.value) : 'error';
 
     if (typeof value !== 'number') {
       this._slider.input.style.borderColor = 'red';
       this._slider.input.style.outlineColor = 'red';
       console.warn('error: input value can\'t transform to number type');
+    } else if ((value < this._slider.min) || (value > this._slider.max)) {
+      this._slider.input.style.borderColor = 'yellow';
+      this._slider.input.style.outlineColor = 'yellow';
+      console.warn('error: out of range');
     } else {
       this._slider.input.style.borderColor = '';
       this._slider.input.style.outlineColor = '';
-
+      this.setValue(value);
     }
-
-
   }
 
   setValue(value) {
