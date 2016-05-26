@@ -34,6 +34,7 @@ export default class Slider {
 
     sliderLine.classList.add('slider__line');
     sliderThumb.classList.add('slider__thumb');
+    sliderInput.classList.add('slider__input');
     sliderInput.type = 'text';
     sliderLine.appendChild(sliderThumb);
     sliderThumb.ondragstart = () => false;
@@ -95,7 +96,19 @@ export default class Slider {
   }
 
   _inputHandler(event){
-    console.log(event.target.value);
+    const value = parseInt(event.target.value) ?  parseInt(event.target.value): 'error';
+
+    if (typeof value !== 'number') {
+      this._slider.input.style.borderColor = 'red';
+      this._slider.input.style.outlineColor = 'red';
+      console.warn('error: input value can\'t transform to number type');
+    } else {
+      this._slider.input.style.borderColor = '';
+      this._slider.input.style.outlineColor = '';
+
+    }
+
+
   }
 
   setValue(value) {
