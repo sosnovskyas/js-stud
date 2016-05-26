@@ -127,6 +127,7 @@ export default class Slider {
       value = this._slider.max;
     }
 
+    value = Math.round(value);
     // set value
     this._slider.value = value;
     this._slider.input.value = value;
