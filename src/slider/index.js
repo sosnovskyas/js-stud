@@ -9,15 +9,14 @@ export default class Slider {
     maxValue = 200,
     currentValue = minValue
   }) {
-    this._min = minValue;
-    this._max = maxValue;
 
     // make slider
     this._slider = this._makeSlider(elem);
 
     // set slider
+    this._slider.min = minValue;
+    this._slider.max = maxValue;
     this._setPointValue();
-
     this.setValue(currentValue);
 
     document.addEventListener('mousedown', event => this._mouseDown(event));
@@ -50,8 +49,7 @@ export default class Slider {
     const thumb = event.target.closest('.slider__thumb');
 
     if (!thumb) return;
-    console.dir(thumb.getBoundingClientRect());
-    // console.log(thumb.scrollWidth);
+
     document.addEventListener('mousemove', this._slider.moveHandler);
   }
 
@@ -102,18 +100,16 @@ export default class Slider {
     // set value
     this._slider.value = value;
 
-    this._setCoords()
+    this._setCoords((value * this._slider.point) - (this._slider.min * this._slider.point))
   }
 
   getValue(){
-    // const lenght = this._slider.line.getBoundingClientRect().width - this._slider.thumb.getBoundingClientRect().width;
-    return this._slider.thumb.getBoundingClientRect().left
+    return this._slider.value;
   }
 
   _setPointValue(){
     const lineWidth = this._slider.line.getBoundingClientRect().width;
-    const vlueRange = this._max - this._min;
-
+    const vlueRange = this._slider.max - this._slider.min;
     this._slider.point = lineWidth / vlueRange;
   }
 
