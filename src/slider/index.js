@@ -5,19 +5,21 @@ import './slider.styl'
 export default class Slider {
   constructor({
     elem,
-    minValue = 100,
-    maxValue = 200,
-    currentValue = minValue
+    min = 100,
+    max = 200,
+    current = min
   }) {
 
     // make slider
     this._slider = this._makeSlider(elem);
 
     // set slider
-    this._slider.min = minValue;
-    this._slider.max = maxValue;
+    this._slider.min = min;
+    this._slider.max = max;
     this._setPointValue();
-    this.setValue(currentValue);
+    this.setValue(current);
+
+    console.log(this._slider);
 
     document.addEventListener('mousedown', event => this._mouseDown(event));
     document.addEventListener('mouseup', event => this._mouseUp(event));
